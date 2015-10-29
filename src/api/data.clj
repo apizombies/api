@@ -22,18 +22,6 @@
                        [:office :varchar "NOT NULL"]
                        [:description :varchar "NOT NULL"])))
 
-;; TODO remove this
-(def toni-employee-map
-  {:name "toni"
-   :email "areina0@gmail.com"
-   :team "engineering"
-   :phone "626"
-   :skype "toni.reina"
-   :twitter "notengo"
-   :office "BCN"
-   :description "Redis babysitter"})
-
-
 (defn add-employee [new-employee]
   (first (sql/insert! spec :employees new-employee)))
 
