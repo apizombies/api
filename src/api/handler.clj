@@ -18,6 +18,15 @@
 
 (s/defschema NewEmployee (dissoc Employee :id))
 
+(defn send-notification [notification resource]
+  ;; (http/post "http://host.com/path" options
+  ;;         (fn [{:keys [status headers body error]}] ;; asynchronous response handling
+  ;;           (if error
+  ;;             (println "Failed, exception is " error)
+  ;;             (println "Async HTTP GET: " status))))
+  true
+  )
+
 (defapi app
   (swagger-ui)
   (swagger-docs
@@ -41,7 +50,9 @@
            :return Employee
            :body [employee (describe NewEmployee "new employee")]
            :summary "Adds an Employee"
-           (ok (add-employee (rs/coerce NewEmployee employee))))
+           (let [db-result (add-employee (rs/coerce NewEmployee employee))]
+             (send-notification :new-employee db-result)
+             (ok db-result)))
     (PUT* "/:id" []
           :path-params [id :- Long]
           :body [employee (describe NewEmployee "updated employee")]
@@ -52,6 +63,10 @@
     (DELETE* "/:id" []
              :path-params [id :- Long]
              :summary "Deletes an Employee"
-             (if (zero? (delete-employee id))
-               (not-found {:reason "Employee not found"})
-               (ok {})))))
+             (let [original-employee (get-employee id)
+                   db-result (delete-employee id)]
+               (if (zero? db-result)
+                 (not-found {:reason "Employee not found"})
+                 (do
+                   (send-notification :deleted-employee original-employee)
+                   (ok {})))))))
