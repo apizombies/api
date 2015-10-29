@@ -8,19 +8,25 @@
   (sql/db-do-commands spec
                       (sql/drop-table-ddl :employees)))
 
+(defn create-table [sql-statement]
+  (clojure.string/replace-first sql-statement "CREATE TABLE" "CREATE TABLE IF NOT EXISTS"))
+
 (defn create-employees-table []
   (sql/db-do-commands spec
-                      (sql/create-table-ddl
-                       :employees
-                       [:id :serial "PRIMARY KEY"]
-                       [:name :varchar "NOT NULL"]
-                       [:email :varchar "NOT NULL"]
-                       [:team :varchar "NOT NULL"]
-                       [:phone :varchar "NOT NULL"]
-                       [:skype :varchar "NOT NULL"]
-                       [:twitter :varchar "NOT NULL"]
-                       [:office :varchar "NOT NULL"]
-                       [:description :varchar "NOT NULL"])))
+                      (create-table (sql/create-table-ddl
+                                     :employees
+                                      [:id :serial "PRIMARY KEY"]
+                                      [:name :varchar "NOT NULL"]
+                                      [:email :varchar "NOT NULL"]
+                                      [:team :varchar "NOT NULL"]
+                                      [:phone :varchar "NOT NULL"]
+                                      [:skype :varchar "NOT NULL"]
+                                      [:twitter :varchar "NOT NULL"]
+                                      [:office :varchar "NOT NULL"]
+                                      [:description :varchar "NOT NULL"]))))
+
+(defn create-db-schema []
+  (create-employees-table))
 
 (defn add-employee [new-employee]
   (first (sql/insert! spec :employees new-employee)))

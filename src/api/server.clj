@@ -3,6 +3,7 @@
   (:require [compojure.api.middleware :refer [wrap-components]]
             [ring.adapter.jetty :refer [run-jetty]]
             [api.handler :refer [app]]
+            [api.data :refer [create-db-schema]]
             [environ.core :refer [env]]))
 
 (defn run-web-server [& [port]]
@@ -16,4 +17,5 @@
   (run-web-server port))
 
 (defn -main [& [port]]
+  (create-db-schema)
   (run port))
