@@ -1,0 +1,1 @@
+web: java $JVM_OPTS -cp target/apizombies.jar clojure.main -m api.server
