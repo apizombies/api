@@ -7,11 +7,11 @@
                  [environ "1.0.0"]
                  [postgresql "9.1-901.jdbc4"]
                  [com.stuartsierra/component "0.2.3"]
+                 [reloaded.repl "0.2.0"]
                  [metosin/compojure-api "0.22.0"]]
   :ring {:handler api.handler/app}
   :uberjar-name "apizombies.jar"
-  :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                                  [reloaded.repl "0.2.0"]]
+  :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]]
                    :plugins [[lein-ring "0.9.6"]]
                    :main api.server}
              :uberjar {:aot :all
