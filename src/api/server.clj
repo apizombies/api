@@ -1,37 +1,19 @@
 (ns api.server
   (:gen-class)
-  (:require [org.httpkit.server :as httpkit]
-            [compojure.api.middleware :refer [wrap-components]]
-            [com.stuartsierra.component :as component]
+  (:require [compojure.api.middleware :refer [wrap-components]]
+            [ring.adapter.jetty :refer [run-jetty]]
             [api.handler :refer [app]]
-            [reloaded.repl :refer [go set-init!]]))
+            [environ.core :refer [env]]))
 
-(defrecord Example []
-  component/Lifecycle
-  (start [this]
-    (assoc this :example "hello world"))
-  (stop [this]
-    this))
+(defn run-web-server [& [port]]
+  (let [port (Integer. (or port (env :port) 10555))]
+    (println (format "Starting web server on port %d." port))
+    (run-jetty app {:port port :join? false})))
 
-(defrecord HttpKit []
-  component/Lifecycle
-  (start [this]
-    (println "Server started at http://localhost:3000")
-    (assoc this :http-kit (httpkit/run-server
-                            (wrap-components
-                              #'app
-                              (select-keys this [:example]))
-                            {:port 3000})))
-  (stop [this]
-    (if-let [http-kit (:http-kit this)]
-      (http-kit))
-    (dissoc this :http-kit)))
+(defn run [& [port]]
+  ;; (when is-dev?
+  ;;   (run-auto-reload))
+  (run-web-server port))
 
-(defn new-system []
-  (component/system-map
-    :example (->Example)
-    :http-kit (component/using (->HttpKit) [:example])))
-
-(defn -main []
-  (set-init! #(new-system))
-  (go))
+(defn -main [& [port]]
+  (run port))
