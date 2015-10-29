@@ -7,6 +7,7 @@
 
 (s/defschema Employee {:id Long
                        :name String
+                       :username String
                        :email String
                        :team String
                        :phone String
@@ -36,6 +37,7 @@
             (POST* "/typeform" []
            :return Boolean
            :body [body s/Any]
+           
            (println body)
            (ok true)))
   (context* "/employees" []

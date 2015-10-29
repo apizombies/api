@@ -17,6 +17,7 @@
                                      :employees
                                       [:id :serial "PRIMARY KEY"]
                                       [:name :varchar "NOT NULL"]
+                                      [:username :varchar "NOT NULL"]
                                       [:email :varchar "NOT NULL"]
                                       [:team :varchar "NOT NULL"]
                                       [:phone :varchar "NOT NULL"]
