@@ -9,8 +9,10 @@
                  [com.stuartsierra/component "0.2.3"]
                  [metosin/compojure-api "0.22.0"]]
   :ring {:handler api.handler/app}
-  :uberjar-name "server.jar"
+  :uberjar-name "apizombies.jar"
   :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                                   [reloaded.repl "0.2.0"]]
                    :plugins [[lein-ring "0.9.6"]]
-                   :main api.server}})
+                   :main api.server}
+             :uberjar {:aot :all
+                       :main api.server}})
