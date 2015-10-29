@@ -3,8 +3,7 @@
             [ring.util.http-response :refer :all]
             [api.data :refer :all]
             [schema.core :as s]
-            [ring.swagger.schema :as rs])
-  (:import [org.joda.time DateTime]))
+            [ring.swagger.schema :as rs]))
 
 (s/defschema Employee {:id Long
                        :name String
@@ -33,6 +32,12 @@
     {:info {:title "ApiZombies"
             :description "API management company managed with an awesome API"}
      :tags [{:name "hello", :description "says hello in Finnish"}]})
+  (context* "/webhooks" []
+            (POST* "/typeform" []
+           :return Boolean
+           :body [body s/Any]
+           (println body)
+           (ok true)))
   (context* "/employees" []
     :tags ["employees"]
     (GET* "/" []
