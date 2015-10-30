@@ -2,6 +2,7 @@
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [api.data :refer :all]
+            [api.integrations :refer [send-notification]]
             [schema.core :as s]
             [ring.swagger.schema :as rs]))
 
@@ -17,15 +18,6 @@
                        :description String})
 
 (s/defschema NewEmployee (dissoc Employee :id))
-
-(defn send-notification [notification resource]
-  ;; (http/post "http://host.com/path" options
-  ;;         (fn [{:keys [status headers body error]}] ;; asynchronous response handling
-  ;;           (if error
-  ;;             (println "Failed, exception is " error)
-  ;;             (println "Async HTTP GET: " status))))
-  true
-  )
 
 (defapi app
   (swagger-ui)
