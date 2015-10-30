@@ -23,6 +23,7 @@
                                       [:phone :varchar "NOT NULL"]
                                       [:skype :varchar "NOT NULL"]
                                       [:twitter :varchar "NOT NULL"]
+                                      [:github :varchar "NOT NULL"]
                                       [:office :varchar "NOT NULL"]
                                       [:description :varchar "NOT NULL"]))))
 

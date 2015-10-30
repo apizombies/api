@@ -14,6 +14,7 @@
                        :phone String
                        :skype String
                        :twitter String
+                       :github String
                        :office String
                        :description String})
 
