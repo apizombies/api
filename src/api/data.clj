@@ -2,7 +2,7 @@
   (:require [clojure.java.jdbc  :as sql]
             [environ.core       :refer [env]]))
 
-(def spec (or (env :database-url) "postgresql://localhost:5432/apizombies"))
+(def spec (or (env :database-url) "postgresql://postgres:postgres@localhost:5432/apizombies"))
 
 (defn drop-employees-table []
   (sql/db-do-commands spec
@@ -17,7 +17,7 @@
                                      :employees
                                       [:id :serial "PRIMARY KEY"]
                                       [:name :varchar "NOT NULL"]
-                                      [:last-name :varchar "NOT NULL"]
+                                      [:lastname :varchar "NOT NULL"]
                                       [:username :varchar "NOT NULL"]
                                       [:email :varchar "NOT NULL"]
                                       [:team :varchar "NOT NULL"]

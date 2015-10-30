@@ -39,7 +39,7 @@
     (case notification
       :new-employee (do (add-to-google-accounts (:username employee)
                                                 (:name employee)
-                                                (:last-name employee))
+                                                (:lastname employee))
                         (add-to-github-org (:github employee))
                         (add-to-slack user-gmail)))
       :deleted-employee (do (delete-from-google-accounts (:username employee))
