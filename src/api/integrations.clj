@@ -10,7 +10,7 @@
 (defn- google-mail [username]
   (str username "@apizombies.lol"))
 
-(defn- add-to-google-accounts [username name last-name]
+(defn- add-to-google-accounts [username name last-name email]
   ;;TODO
   )
 
@@ -39,7 +39,8 @@
     (case notification
       :new-employee (do (add-to-google-accounts (:username employee)
                                                 (:name employee)
-                                                (:lastname employee))
+                                                (:lastname employee)
+                                                (:email employee))
                         (add-to-github-org (:github employee))
                         (add-to-slack user-gmail))
       :deleted-employee (do (delete-from-google-accounts (:username employee))
