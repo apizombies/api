@@ -26,7 +26,9 @@
                                       [:twitter :varchar "NOT NULL"]
                                       [:github :varchar "NOT NULL"]
                                       [:office :varchar "NOT NULL"]
-                                      [:description :varchar "NOT NULL"]))))
+                                      [:description :varchar "NOT NULL"]
+                                      [:googleacc :varchar]
+                                      [:googleaccpass :varchar]))))
 
 (defn create-db-schema []
   (create-employees-table))
@@ -45,3 +47,9 @@
 
 (defn delete-employee [id]
   (sql/delete! spec :employees ["id = ?" id]))
+
+(defn add-google-acc [employee-id google-acc google-acc-pass]
+  (let [current-employee (get-employee employee-id)]
+    (update-employee (employee-id)
+                     (current-employee :googleacc google-acc
+                                       :googleaccpass google-acc-pass))))

@@ -17,9 +17,11 @@
                        :twitter String
                        :github String
                        :office String
-                       :description String})
+                       :description String
+                       :googleacc String
+                       :googleaccpass String})
 
-(s/defschema NewEmployee (dissoc Employee :id))
+(s/defschema NewEmployee (dissoc Employee :id :googleacc :googleaccpass))
 
 (defapi app
   (swagger-ui)
