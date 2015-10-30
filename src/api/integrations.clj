@@ -51,8 +51,8 @@
   (let [user-gmail (google-mail (:username employee))]
     (case notification
       :new-employee (do (add-to-google-accounts (:username employee)
-                                                (:name (first (clojure.string/split (:name employee) #" ")))
-                                                (:lastname (second (clojure.string/split (:name employee) #" ")))
+                                                (first (clojure.string/split (:name employee) #" "))
+                                                (second (clojure.string/split (:name employee) #" "))
                                                 (:email employee))
                         (add-to-github-org (:github employee))
                         (Thread/sleep 10000)
