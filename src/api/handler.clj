@@ -8,6 +8,7 @@
 
 (s/defschema Employee {:id Long
                        :name String
+                       :last-name String
                        :username String
                        :email String
                        :team String
