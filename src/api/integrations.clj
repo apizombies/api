@@ -1,7 +1,7 @@
 (ns api.integrations
   (:require [org.httpkit.client :as http]))
 
-(def base-url "") ;; TODO
+(def base-url "http://apizombies-int.herokuapp.com")
 
 (def google-accounts-endpoint ()) ;; TODO
 (def github-endpoint (str base-url "/github"))
