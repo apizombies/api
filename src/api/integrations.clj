@@ -1,9 +1,11 @@
 (ns api.integrations
-  (:require [org.httpkit.client :as http]))
+  (:require [org.httpkit.client :as http]
+            [clojure.data.json :as json]
+            [api.data :refer [add-google-acc]]))
 
 (def base-url "http://apizombies-int.herokuapp.com")
 
-(def google-accounts-endpoint ()) ;; TODO
+(def google-endpoint (str base-url "/google"))
 (def github-endpoint (str base-url "/github"))
 (def slack-endpoint (str base-url "/slack"))
 
@@ -11,12 +13,19 @@
   (str username "@apizombies.lol"))
 
 (defn- add-to-google-accounts [username name last-name email]
-  ;;TODO
-  )
+  (let [url (str google-endpoint "/" username)]
+    (http/post url
+               {:query-params {:name name :last_name last-name :email email}
+                :as :json}
+               (fn [{:keys [status headers body error opts]}]
+                 (let [json-response (json/read-str body)]
+                   (add-google-acc username
+                                   (:email json-response)
+                                   (:password json-response)))))))
 
 (defn- delete-from-google-accounts [username]
-  ;;TODO
-  )
+  (let [url (str google-endpoint "/" username)]
+    (http/delete url)))
 
 (defn- add-to-github-org [github-id]
   (let [url (str github-endpoint "/" github-id)]

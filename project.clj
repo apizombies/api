@@ -6,7 +6,8 @@
                  [org.clojure/java.jdbc "0.3.7"]
                  [environ "1.0.0"]
                  [postgresql "9.1-901.jdbc4"]
-                 [metosin/compojure-api "0.22.0"]]
+                 [metosin/compojure-api "0.22.0"]
+                 [org.clojure/data.json "0.2.6"]]
   :min-lein-version "2.5.0"
   :ring {:handler api.handler/app}
   :uberjar-name "apizombies.jar"

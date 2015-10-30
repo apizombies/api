@@ -48,8 +48,8 @@
 (defn delete-employee [id]
   (sql/delete! spec :employees ["id = ?" id]))
 
-(defn add-google-acc [employee-id google-acc google-acc-pass]
-  (let [current-employee (get-employee employee-id)]
-    (update-employee (employee-id)
+(defn add-google-acc [username google-acc google-acc-pass]
+  (let [current-employee (first (sql/query spec ["select * from employees where username = ?" username]))]
+    (update-employee (:id current-employee)
                      (current-employee :googleacc google-acc
                                        :googleaccpass google-acc-pass))))
