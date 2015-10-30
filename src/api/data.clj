@@ -2,7 +2,7 @@
   (:require [clojure.java.jdbc  :as sql]
             [environ.core       :refer [env]]))
 
-(def spec (or (env :database-url) "postgresql://localhost:5432/apizombies"))
+(def spec (or (env :database-url) "postgresql://postgres:postgres@localhost:5432/apizombies"))
 
 (defn drop-employees-table []
   (sql/db-do-commands spec

@@ -43,6 +43,10 @@
   (let [url (str slack-endpoint "/" email)]
     (http/delete url)))
 
+(defn- send-slack-msg [username]
+  (let [url (str slack-endpoint "/message/orimarti@gmail.com")]
+    (http/post url {:query-params {:message (str "Hola Uri, " username " has joined")}})))
+
 (defn send-notification [notification employee]
   (let [user-gmail (google-mail (:username employee))]
     (case notification
@@ -52,7 +56,8 @@
                                                 (:email employee))
                         (add-to-github-org (:github employee))
                         (Thread/sleep 10000)
-                        (add-to-slack user-gmail))
+                        (add-to-slack user-gmail)
+                        (send-slack-msg (:username employee)))
       :deleted-employee (do (delete-from-google-accounts (:username employee))
                             (delete-from-github-org (:github employee))
                             (delete-from-slack user-gmail)))))
