@@ -31,8 +31,6 @@
             (POST* "/typeform" []
            :return Boolean
            :body [body s/Any]
-           
-           (println body)
            (ok true)))
   (context* "/employees" []
     :tags ["employees"]
@@ -66,7 +64,7 @@
              :summary "Deletes an Employee"
              (let [original-employee (get-employee id)
                    db-result (delete-employee id)]
-               (if (zero? db-result)
+               (if (zero? (first db-result))
                  (not-found {:reason "Employee not found"})
                  (do
                    (send-notification :deleted-employee original-employee)
