@@ -3,6 +3,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [clj-time "0.9.0"] ; required due to bug in lein-ring
                  [http-kit "2.1.19"]
+                 [jumblerg/ring.middleware.cors "1.0.1"]
                  [org.clojure/java.jdbc "0.3.7"]
                  [environ "1.0.0"]
                  [postgresql "9.1-901.jdbc4"]
