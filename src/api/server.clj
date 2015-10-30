@@ -4,7 +4,7 @@
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.reload :as reload]
             [api.handler :refer [app]]
-            [api.data :refer [create-db-schema]]
+            [api.data :refer :all]
             [environ.core :refer [env]]))
 
 (def handler

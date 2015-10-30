@@ -27,8 +27,8 @@
                                       [:github :varchar "NOT NULL"]
                                       [:office :varchar "NOT NULL"]
                                       [:description :varchar "NOT NULL"]
-                                      [:googleacc :varchar]
-                                      [:googleaccpass :varchar]))))
+                                      [:googleacc :varchar "DEFAULT 'NOT_YET'"]
+                                      [:googleaccpass :varchar "DEFAULT 'NOT_YET'"]))))
 
 (defn create-db-schema []
   (create-employees-table))
@@ -51,5 +51,5 @@
 (defn add-google-acc [username google-acc google-acc-pass]
   (let [current-employee (first (sql/query spec ["select * from employees where username = ?" username]))]
     (update-employee (:id current-employee)
-                     (current-employee :googleacc google-acc
-                                       :googleaccpass google-acc-pass))))
+                     (assoc current-employee :googleacc google-acc
+                                             :googleaccpass google-acc-pass))))

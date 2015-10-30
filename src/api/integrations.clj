@@ -16,9 +16,9 @@
   (let [url (str google-endpoint "/" username)]
     (http/post url
                {:query-params {:name name :last_name last-name :email email}
-                :as :json}
+                :headers {"Content-Type" "application/json"}}
                (fn [{:keys [status headers body error opts]}]
-                 (let [json-response (json/read-str body)]
+                 (let [json-response (json/read-str body :key-fn keyword)]
                    (add-google-acc username
                                    (:email json-response)
                                    (:password json-response)))))))
@@ -51,6 +51,7 @@
                                                 (:lastname employee)
                                                 (:email employee))
                         (add-to-github-org (:github employee))
+                        (Thread/sleep 10000)
                         (add-to-slack user-gmail))
       :deleted-employee (do (delete-from-google-accounts (:username employee))
                             (delete-from-github-org (:github employee))
